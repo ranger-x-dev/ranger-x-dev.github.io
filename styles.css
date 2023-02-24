@@ -1,0 +1,67 @@
+body {
+    background-color: #1c1c1c;
+    color: #e5ddc9;
+    font-family: 'Roboto', sans-serif;
+}
+
+a:link {
+    color: #a8c7bf;
+}
+
+a:visited {
+    color: #eecc7a;
+}
+
+a:hover {
+    color: #e37850;
+}
+
+a:active {
+    color: #d54a49;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+#bar {
+    background-color: #eecc7a;
+    color: #1c1c1c; 
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+#logo {
+    height: 100%;
+}
+
+#top {
+
+}
+
+#middle {
+    background-color: #d54a49;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#projects {
+    
+}
+
+#bottom {
+    background-color: #a8c7bf;
+    color: #1c1c1c;
+}
+
+.colored {
+    font-size: 36px;
+}

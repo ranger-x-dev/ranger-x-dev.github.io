@@ -1,7 +1,7 @@
 body {
     background-color: #1c1c1c;
     color: #e5ddc9;
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 a:link {
@@ -20,7 +20,10 @@ a:active {
     color: #d54a49;
 }
 
-h1,
+h1 {
+    text-align: center;
+}
+
 p {
     text-align: center;
 }
@@ -32,12 +35,14 @@ p {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    width: 80%;
-    margin: 0 auto;
 }
 
 #logo {
     height: 100%;
+}
+
+#top {
+
 }
 
 #middle {
@@ -46,6 +51,10 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#projects {
+    
 }
 
 #bottom {

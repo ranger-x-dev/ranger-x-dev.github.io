@@ -1,14 +1,86 @@
 <html>
 <head>
 <title>Baby Squirrel Studios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
+
+a:link {
+  color: red;
+  text-decoration: none;
+}
+
+a:visited {
+  color: red;
+}
+
+a:hover {
+  color: white;
+}
+
+a:active {
+  color: gray;
+} 
+
 body {
   background-color: #000000;
   color: #FFFFFF;
+  align: center;
+}
+
+/* For mobile phones: */
+[class*="page"] {
+  width: 100%;
+  font-size: 4vw;
+}
+
+@media only screen and (min-width: 1000px) {
+  /* For desktop: */
+  .page {
+    width: 50%;
+	font-size: 3vw;
+  }
+  .game-description {
+    font-size: 1vw;
+  } 
+}
+
+.page { 
+  background-color: #111111;
+  
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.section-title {
+  background-color: #000000;
+  color: #FF0000;
+   
+  margin: 0px;
+  border: 0px;
+  padding: 20px;
+}
+
+.separator {
+  background-color: #000000;
+  color: #FF0000;
 }
 
 .game-description {
-  background-color: #555555;
+  background-color: #111111;
+  color: #FFFFFF;
+  font-family: "Roboto", sans-serif;
+  
+  margin: 0px;
+  border: 0px;
+  padding: 20px;
+}
+
+p {
+  text-align: justify;
 }
 
 .flex-container {
@@ -46,36 +118,117 @@ body {
 </style>
 </head>
 <body>
+
+<center>
+<div class="page">
+
+<div class="links">
+	<a href="index.html#our-games">Games</a>
+	<a href="index.html#blog">Blog</a>
+	<a href="index.html#about">About</a>
+	<a href="">Media</a>
+	<a href="">Community</a>
+</div>
+
 <center>
 <img src="img/babysquirrelstudios.png" width=100%>
 <h1>Baby Squirrel Studios</h1>
 </center>
-<hr>
+
 <center>
-<img src="img/xenotaph_logo_title.png" width=50%>
+<div class="join-discord">
+Join the development!
+<a href="https://discord.gg/t7eUafMpsj" target="_blank"><img src="img/join_discord.png" width=100%></a>
+</div>
 </center>
+
+<div class="section-title" id="our-games">
+<h2>Our Games</h2>
+</div>
+
+<div class="game-description">
+<center>
+<img src="img/xenotaph_logo_title.png" width=100%>
+</center>
+
+<div class="description-text">
+  
+  <p><b>Xenotaph</b> is a lore-rich turn-based strategy game that merges classic board game elements, card deck building, and puzzles, with an enigmatic futuristic expedition as its narrative backdrop. Solve challenging puzzles to unlock new cards: ancient relics that can be used to alter and augment the abilities of the pieces on the board. Build your deck to discover new playstyles and fun synergies, and guide your expedition to victory against whatever challenges that may emerge from the cosmos.</p>
+  
+  <p>Xenotaph is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
+  
+  <p>
+  Status: In development<br>
+  Release Date: Late 2024 (tentative)
+  </p>
+</div>
+</div>
+
+<div class="separator">~</div>
+
 <div class="game-description">
 <div>
-  <h1>Welcome to Xenotaph: Embark on a Cosmic Odyssey</h1>
-  <p>Xenotaph is a lore-rich turn-based strategy game that seamlessly merges classic board game elements, card deck building, and puzzles, offering an enigmatic future as its backdrop. In this cosmic odyssey, players assume the role of Remnants, the last flickering embers of humanity, tasked with resurrecting a fractured civilization from annihilation.</p>
+<br>
+<h3>Space Junkers</h3>
+<center>
+Image coming soon!
+</center>
+  
+  <p><b>Space Junkers </b> is a multiplayer 3D spaceship simulator being developed in the Godot Engine. Set in a retro-futuristic near-future, pilots known as Junkers eek out a meager existence in the solar system. As a Junker, you must repair, maintain, and run every system of your ship in order to survive and thrive in a system filled with hazards, hostiles, and of course: other Junkers.</p>
+  
+  <p>Space Junkers is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
+  
+  <p>
+  Status: In development<br>
+  Release Date: TBA
+  </p>
+
+</div>
 </div>
 
-<div>
-  <h2>Features:</h2>
-  <ol>
-    <li><strong>Archaeology on a Cosmic Scale:</strong> Lead your expedition across the universe, unearthing ancient lore and advanced technologies that hold the key to humanity's survival.</li>
-    <li><strong>Choose Your Path:</strong> Determine your Expedition's destiny – will you strive for peace or embrace a more aggressive approach?</li>
-    <li><strong>Strategic Mastery:</strong> Conquer puzzles, defeat adversaries, and strategically assemble your arsenal of mysterious items and abilities.</li>
-    <li><strong>Cool Cards:</strong> Acquire unique cards adorned with original artwork as you progress through the game. Experiment with combinations to craft distinct playstyles and strategies.</li>
-    <li><strong>Micro-Transaction Free:</strong> Xenotaph is devoid of micro-transactions, ensuring a fair and balanced gameplay experience for all.</li>
-    <li><strong>Online Multiplayer:</strong> Dive into a deep, competitive multiplayer mode crafted with balance and fairness in mind. Your feedback is integral to shaping this experience.</li>
-    <li><strong>Community-Focused Development:</strong> Become part of our dedicated community of strategy enthusiasts and developers, contributing to the ongoing evolution of Xenotaph.</li>
-  </ol>
+<div class="section-title" id="blog">
+<h2>Blog</h2>
 </div>
 
+<div class="game-description">
+
 <div>
-  <p>Embark on a journey that transcends space and time. The universe awaits your exploration, and the fate of humanity rests in your hands. Join us in shaping the destiny of Xenotaph today.</p>
+  <h3>Blog Post Title or Image</h3>
+  <p id="id1">Post Date (time since posted generated by JS)</p>
+  <p>
+  Blog post content.
+  </p>
 </div>
+</div>
+
+<div class="separator">~</div>
+
+<div class="game-description">
+
+<div>
+  <h3>Blog Post Title or Image</h3>
+  <p id="id1">Post Date (time since posted generated by JS)</p>
+  <p>
+  Blog post content.
+  </p>
+</div>
+</div>
+
+
+
+<div class="section-title" id="about">
+<h2>About</h2>
+</div>
+
+<div class="game-description">
+
+<div>
+  <p>Baby Squirrel Studios is the brainchild of me, <a href="https://github.com/ranger-x-dev" target="_blank">Ranger X</a>. I am an independent game developer, and I am making games that I have always wanted to play. I love science fiction, science fact, and all things space - that's what my games are about. If you're interested in any of the games, please join me on Discord to follow the development.</p>
+</div>
+</div>
+
+</div>
+
 </div>
 
 <ul class="flex-container">
@@ -86,6 +239,56 @@ body {
   <li class="flex-item">5</li>
   <li class="flex-item">6</li>
 </ul>
+
+</div>
+</div>
+<script>
+// Calculates the time since a specific date.
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+// Changes the content of a p element with an id to a new value.
+function myFunc(variable) {
+	var s = document.getElementById(variable);
+	s.value = "time since posted";
+	
+	document.getElementById('id1').innerHTML = s.value;
+}
+
+
+// Testing functions...
+myFunc("id1");
+
+var aDay = 24*60*60*1000;
+console.log(timeSince(new Date(Date.now()-aDay)));
+console.log(timeSince(new Date(Date.now()-aDay*2)));
+
+</script>
 
 </body>
 </html>

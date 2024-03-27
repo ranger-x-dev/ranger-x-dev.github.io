@@ -1,191 +1,91 @@
 <html>
 <head>
-<title>Fermion</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+<title>Baby Squirrel Studios</title>
+<style>
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.game-description {
+  background-color: #555555;
+}
+
+.flex-container {
+  /* We first create a flex layout context */
+  display: flex;
+  
+  /* Then we define the flow direction 
+     and if we allow the items to wrap 
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+  
+  /* Then we define how is distributed the remaining space */
+  justify-content: space-around;
+  
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.flex-item {
+  background: tomato;
+  padding: 5px;
+  width: 200px;
+  height: 150px;
+  margin-top: 10px;
+  line-height: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+</style>
 </head>
 <body>
-  <div id="bar">
-    <div id="bar-left"><img id="logo" src="img/fermionlogo.png" alt="logo"></div>
-    <div id="bar-right"><a href="https://github.com/fermion87"><i class="devicon-github-original colored"></i></a></div>
-    
-  </div>
-  <div id="top">
-    <h1>Hi, I'm Kyle.</h1>
-    <p>
-    Here is a blurb.
-    </p>
-  </div>
-  <div id="middle">
-    <h1>I'm a software developer.</h1>
-    <i class="devicon-html5-plain colored"></i>
-    <i class="devicon-javascript-plain colored"></i>
-    <i class="devicon-css3-plain colored"></i>
-    <i class="devicon-nodejs-plain colored"></i>
-    <i class="devicon-cplusplus-plain colored"></i>
-    <i class="devicon-github-original colored"></i>
-    <p>
-    Coming soon. <a href="three.html">three.js test</a>
-    </p>
-  </div>
-  <div id="projects">
-    <h1>Projects</h1>
-    <img src="img/fermionlogo.png" alt="logo">
-    <p>
-    Coming soon.
-	  <a href="three.html">three.js test</a>
-    </p>
-  </div>
-  <div id="bottom">
-    <h1>Contact Me</h1>
-    <p>
-    Coming soon.
-	  <a href="three.html">three.js test</a>
-    </p>
-  </div>
-   
+<center>
+<img src="img/babysquirrelstudios.png" width=100%>
+<h1>Baby Squirrel Studios</h1>
+</center>
+<hr>
+<center>
+<img src="img/xenotaph_logo_title.png" width=50%>
+</center>
+<div class="game-description">
+<div>
+  <h1>Welcome to Xenotaph: Embark on a Cosmic Odyssey</h1>
+  <p>Xenotaph is a lore-rich turn-based strategy game that seamlessly merges classic board game elements, card deck building, and puzzles, offering an enigmatic future as its backdrop. In this cosmic odyssey, players assume the role of Remnants, the last flickering embers of humanity, tasked with resurrecting a fractured civilization from annihilation.</p>
+</div>
 
-    <script src="lib/three.js"></script>
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/underscore.js"></script>
-    <script src="lib/TrackballControls.js"></script>
-    <script src="lib/ShaderLoader.js"></script>
-    
-    <script src="PhysicsRenderer.js"></script>
-    
-    
-    <script>
-    
-    
-      var scene , camera , renderer, clock , controls;
-    
-      var SIZE = 128;
-      var simulation;
-    
-      var simulationUniforms = {
-      
-        dT:{ type:"f" , value: 0 },
-        noiseSize: { type:"f" , value: .1 }
-    
-      }
-    
-      var renderUniforms = {
-    
-        t_pos:{ type:"t" , value: null }
-    
-      }
-    
-    
-    
-    
-      var shaders = new ShaderLoader( 'shaders' );
-    
-      shaders.load( 'ss-curlFront'    , 'sim'    , 'simulation' );
-      shaders.load( 'vs-lookupFront'  , 'lookup' , 'vertex'     );
-      shaders.load( 'fs-lookupFront'  , 'lookup' , 'fragment'   );
-    
-      shaders.shaderSetLoaded = function(){
-    
-        init();
-        animate();
-    
-      }
-    
-    
-      
-      function init(){
-    
-          /*
-    
-             Default threejs stuff!
-    
-          */
-          scene = new THREE.Scene();
-    
-          var ar = window.innerWidth / window.innerHeight;
-    
-          camera = new THREE.PerspectiveCamera( 75, ar , 1, 1000 );
-          camera.position.z = 5;
-    
-          renderer = new THREE.WebGLRenderer();
-          renderer.setSize( window.innerWidth, window.innerHeight );
-    
-          renderer.domElement.id = "renderer"
-          document.body.appendChild( renderer.domElement );
-    
-    
-         // controls = new THREE.TrackballControls( camera );
-          clock = new THREE.Clock();
-    
-    
-          simulation = new PhysicsRenderer( SIZE , shaders.ss.sim , renderer );
-    
-    
-          var geo = createLookupGeometry( SIZE );
-    
-          var mat = new THREE.ShaderMaterial({
-            uniforms: renderUniforms,
-            vertexShader: shaders.vs.lookup,
-            fragmentShader: shaders.fs.lookup,
-    
-          });
-    
-          simulation.setUniforms( simulationUniforms );
-    
-          var particles = new THREE.PointCloud( geo , mat );
-          particles.frustumCulled = false;
-    
-          scene.add( particles );
-    
-    
-          simulation.addBoundTexture( renderUniforms.t_pos , 'output' );
-          simulation.resetRand( 5 );
-    
-          
-          var mousewheel = function( e ){
-    
-            particles.rotation.x += e.wheelDeltaY / 1000;
-          
-          }
-        
-          window.addEventListener( 'mousewheel', mousewheel, false );
-    
-      }
-    
-      function animate(){
-    
-        requestAnimationFrame( animate );
-     
-        simulationUniforms.dT.value = clock.getDelta();
-        simulation.update();
-    
-        //controls.update();
-        
-        renderer.render( scene , camera );
-    
-      }
-    
-    
-      function createLookupGeometry( size ){        
-            
-        var geo = new THREE.BufferGeometry();
-        var positions = new Float32Array(  size * size * 3 );
-    
-        for ( var i = 0, j = 0, l = positions.length / 3; i < l; i ++, j += 3 ) {
-    
-          positions[ j     ] = ( i % size ) / size;
-          positions[ j + 1 ] = Math.floor( i / size ) / size;
-        
-        }
-    
-        var posA = new THREE.BufferAttribute( positions , 3 );
-        geo.addAttribute( 'position', posA );
-    
-        return geo;
-        
-      }
-    
-    </script>
-    
+<div>
+  <h2>Features:</h2>
+  <ol>
+    <li><strong>Archaeology on a Cosmic Scale:</strong> Lead your expedition across the universe, unearthing ancient lore and advanced technologies that hold the key to humanity's survival.</li>
+    <li><strong>Choose Your Path:</strong> Determine your Expedition's destiny – will you strive for peace or embrace a more aggressive approach?</li>
+    <li><strong>Strategic Mastery:</strong> Conquer puzzles, defeat adversaries, and strategically assemble your arsenal of mysterious items and abilities.</li>
+    <li><strong>Cool Cards:</strong> Acquire unique cards adorned with original artwork as you progress through the game. Experiment with combinations to craft distinct playstyles and strategies.</li>
+    <li><strong>Micro-Transaction Free:</strong> Xenotaph is devoid of micro-transactions, ensuring a fair and balanced gameplay experience for all.</li>
+    <li><strong>Online Multiplayer:</strong> Dive into a deep, competitive multiplayer mode crafted with balance and fairness in mind. Your feedback is integral to shaping this experience.</li>
+    <li><strong>Community-Focused Development:</strong> Become part of our dedicated community of strategy enthusiasts and developers, contributing to the ongoing evolution of Xenotaph.</li>
+  </ol>
+</div>
+
+<div>
+  <p>Embark on a journey that transcends space and time. The universe awaits your exploration, and the fate of humanity rests in your hands. Join us in shaping the destiny of Xenotaph today.</p>
+</div>
+</div>
+
+<ul class="flex-container">
+  <li class="flex-item">1</li>
+  <li class="flex-item">2</li>
+  <li class="flex-item">3</li>
+  <li class="flex-item">4</li>
+  <li class="flex-item">5</li>
+  <li class="flex-item">6</li>
+</ul>
+
 </body>
 </html>

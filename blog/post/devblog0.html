@@ -15,6 +15,15 @@
 <meta property="og:description" content="First part of blog post. Testing log text. Does this make the post better? Longer? Wider? What's happening?...">
 <meta property="og:image" content="https://www.babysquirrelstudios.com/img/babysquirrelstudios_og.png">
 
+<style>
+ul {
+	text-align: left;
+}
+li {
+	text-align: left;
+}
+</style>
+
 </head>
 <body>
 
@@ -35,21 +44,15 @@
 </center>
 
 <div class="section-title" id="our-games">
+
+<h3>Devblog 0: The Vision</h3>
+
 <div id="timeSinceOrDate"></div>
-<h3>Blog Post Title</h3>
-</div>
 
-<div class="section">
-<center>
-<img src="../../img/xenotaph_logo_title.png" width=100%>
-</center>
-
-<div class="description-text">
-   
 <script>
 window.onload = function() {
     // Enter your desired date and time below in the format 'YYYY-MM-DDTHH:MM' (e.g., '2024-03-28T12:00')
-    var startDateString = '2024-04-04T13:03'; // Replace this with your desired date and time
+    var startDateString = '2024-04-04T15:52'; // Replace this with your desired date and time
 
     var startDate = new Date(startDateString);
 
@@ -77,17 +80,57 @@ window.onload = function() {
     document.getElementById("timeSinceOrDate").innerHTML = getTimeSinceOrDate(startDate);
 };
 </script>
-  
-  
-  
-  <p><b>Xenotaph</b> is a lore-rich turn-based strategy game that merges classic board game elements, card deck building, and puzzles, with an enigmatic futuristic expedition as its narrative backdrop. Solve challenging puzzles to unlock new cards: ancient relics that can be used to alter and augment the abilities of the pieces on the board. Build your deck to discover new playstyles and fun synergies, and guide your expedition to victory against whatever challenges that may emerge from the cosmos.</p>
-  
-  <p>Xenotaph is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
-  
-  <p>
-  Status: In development<br>
-  Release Date: Late 2024 (tentative)
-  </p>
+
+</div>
+
+<div class="section">
+<div class="description-text">
+   
+<p>
+As far back as I can recall, I have been captivated by the imagery and technology that sprung out from the Golden Age of Science Fiction that spanned the 1930s through the 1950s. The worlds crafted by the visionary authors of the time, giants like Arthur C. Clarke and Isaac Asimov, ignited within me a profound fascination for the possibilities of space exploration, particularly the view of our future as seen from their time period. I dreamed of living in those worlds, but not in the role of a daring hero or ace pilot that is so commonly depicted in much of today's science fiction. A regular Jane or Joe with a wrench and a rudimentary knowledge of orbital mechanics has always been more my speed.
+</p>
+<p>
+Over the years a desire to play a specific type of video game began to materialize: one that captures the nostalgic optimism of the 20th century's atomic and space age and the rugged individualism that would be required to survive within the interior of a spacecraft. One that lets you sail around the solar system using instrumentation and navigational tools more akin to what you might find on a naval ship than an aircraft. One that requires you to keep all your systems in balance but in a far more emersive and elaborate way than simply adjusting a pip in a cockpit.
+</p>
+<p>
+Space Junkers (working title) is the project that aims to capture this experience. It is a 3D spaceship simulator and survival game being developed in the Godot Engine. It might be more aptly classified as a "submarine simulator in space". I'm exited to share what I think is a unique take on PvP in a space game. It is a undertaking that poses numerous challenges, but bit by bit it is coming together. It is currently in an early alpha stage, but new features are being implemented daily. Here's a few features that have been implemented so far:
+</p>
+
+<p>Core features:</p>
+
+<ul>
+<li>Client-server networking with server authority</li>
+<li>Networked physics and player manipulation of physics objects</li>
+</ul>
+<p>Game features:</p>
+<ul>
+<li>Player movements</li>
+<li>Wielded objects (tools, lights, etc)</li>
+<li>Acivity log</li>
+<li>Instrumentation prototypes (gauges, dials, radar display, etc)</li>
+</ul>
+<p>Graphics:</p>
+<ul>
+<li>Environmental models and textures</li>
+<li>Skybox and star model/shaders</li>
+<li>Water shaders</li>
+</ul>
+
+<p>
+I have other projects (Xenotaph and others) that are at varying stages of development. As development progresses, I will continue to post devblogs highlighting the progress that is being made on all fronts. I am also building up a community around the development, stream daily on <a href="https://www.twitch.tv/rangerx___">Twitch</a>, and post updates and media often in our <a href="https://discord.gg/t7eUafMpsj">Discord</a>.
+</p>
+<p>
+Thanks for taking the time to learn more about ours games, and I hope you're as excited to play them as I am.
+</p>
+
+<p>
+<i>- Ranger X</i><br>
+</p>
+<center>
+<img src="../../img/devblog0.png" width=100%>
+</center>
+
+
 </div>
 </div>
 

@@ -90,38 +90,6 @@ p {
   text-align: justify;
 }
 
-.flex-container {
-  /* We first create a flex layout context */
-  display: flex;
-  
-  /* Then we define the flow direction 
-     and if we allow the items to wrap 
-   * Remember this is the same as:
-   * flex-direction: row;
-   * flex-wrap: wrap;
-   */
-  flex-flow: row wrap;
-  
-  /* Then we define how is distributed the remaining space */
-  justify-content: space-around;
-  
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.flex-item {
-  background: tomato;
-  padding: 5px;
-  width: 200px;
-  height: 150px;
-  margin-top: 10px;
-  line-height: 150px;
-  color: white;
-  font-weight: bold;
-  font-size: 3em;
-  text-align: center;
-}
 </style>
 </head>
 <body>
@@ -235,6 +203,27 @@ Join the development!<br>
 <div class="section">
 <center>© 2024 Baby Squirrel Studios. All Rights Reserved.</center>
 </div>
+
+
+<!-- Add a placeholder for the Twitch embed -->
+<div id="twitch-embed"></div>
+
+<!-- Load the Twitch embed JavaScript file -->
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+
+<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
+<script type="text/javascript">
+  new Twitch.Embed("twitch-embed", {
+	width: 854,
+	height: 480,
+	channel: "monstercat",
+	// Only needed if this page is going to be embedded on other websites
+	parent: ["www.babysquirrelstudios.com"]
+  });
+</script>
+
+
+
 </div>
 
 

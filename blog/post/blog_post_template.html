@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>Baby Squirrel Studios</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../style_bss.css">
+
+</head>
+<body>
+
+<center>
+<div class="page">
+
+<div class="links">
+	<div><a href="../../index.html#our-games">Games</a></div>
+	<div><a href="../../index.html#blog">Blog</a></div>
+	<div><a href="../../index.html#about">About</a></div>
+	<div><a href="">Media</a></div>
+	<div><a href="">Community</a></div>
+</div>
+
+<center>
+<img src="../../img/babysquirrelstudios.png" width=100%>
+<h1>Baby Squirrel Studios</h1>
+</center>
+
+<div class="section-title" id="our-games">
+<div id="timeSinceOrDate"></div>
+<h3>Blog Post Title</h3>
+</div>
+
+<div class="section">
+<center>
+<img src="../../img/xenotaph_logo_title.png" width=100%>
+</center>
+
+<div class="description-text">
+   
+<script>
+window.onload = function() {
+    // Enter your desired date and time below in the format 'YYYY-MM-DDTHH:MM' (e.g., '2024-03-28T12:00')
+    var startDateString = '2024-04-04T13:03'; // Replace this with your desired date and time
+
+    var startDate = new Date(startDateString);
+
+    // Function to calculate time since or date
+    function getTimeSinceOrDate(date) {
+        var now = new Date();
+        var timeDiff = now.getTime() - date.getTime();
+        var minutesDiff = Math.floor(timeDiff / (1000 * 60));
+        var hoursDiff = Math.floor(timeDiff / (1000 * 3600));
+        var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+        if (minutesDiff < 60) {
+            return minutesDiff + (minutesDiff === 1 ? " minute ago" : " minutes ago");
+        } else if (hoursDiff < 24) {
+            return hoursDiff + (hoursDiff === 1 ? " hour ago" : " hours ago");
+        } else if (daysDiff < 14) {
+            return daysDiff + (daysDiff === 1 ? " day ago" : " days ago");
+        } else {
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+    }
+
+    // Display time since or date
+    document.getElementById("timeSinceOrDate").innerHTML = getTimeSinceOrDate(startDate);
+};
+</script>
+  
+  
+  
+  <p><b>Xenotaph</b> is a lore-rich turn-based strategy game that merges classic board game elements, card deck building, and puzzles, with an enigmatic futuristic expedition as its narrative backdrop. Solve challenging puzzles to unlock new cards: ancient relics that can be used to alter and augment the abilities of the pieces on the board. Build your deck to discover new playstyles and fun synergies, and guide your expedition to victory against whatever challenges that may emerge from the cosmos.</p>
+  
+  <p>Xenotaph is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
+  
+  <p>
+  Status: In development<br>
+  Release Date: Late 2024 (tentative)
+  </p>
+</div>
+</div>
+
+<div class="separator">+++</div>
+
+<div class="section">
+<center>© 2024 Baby Squirrel Studios. All Rights Reserved.</center>
+</div>
+</div>
+
+
+<script>
+// Calculates the time since a specific date.
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+// Changes the content of a p element with an id to a new value.
+function myFunc(variable) {
+	var s = document.getElementById(variable);
+	s.value = "time since posted";
+	
+	document.getElementById('id1').innerHTML = s.value;
+}
+
+
+// Testing functions...
+myFunc("id1");
+
+var aDay = 24*60*60*1000;
+console.log(timeSince(new Date(Date.now()-aDay)));
+console.log(timeSince(new Date(Date.now()-aDay*2)));
+
+</script>
+
+</body>
+</html>

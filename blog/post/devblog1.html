@@ -1,0 +1,203 @@
+<html>
+<head>
+<title>Baby Squirrel Studios</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../style_bss.css">
+
+<meta property="og:title" content="Devblog 1: The Ship">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.babysquirrelstudios.com/blog/post/devblog1.html">
+<meta property="og:description" content="The past two weeks have focused on the core of Space Junkers: the ship.">
+<meta property="og:image" content="https://www.babysquirrelstudios.com/img/devblog1-1.png">
+
+<style>
+ul {
+	text-align: left;
+}
+li {
+	text-align: left;
+}
+</style>
+
+</head>
+<body>
+
+<center>
+<div class="page">
+
+<div class="links">
+	<div><a href="../../index.html#our-games">Games</a></div>
+	<div><a href="../../index.html#blog">Blog</a></div>
+	<div><a href="../../index.html#about">About</a></div>
+	<div><a href="">Media</a></div>
+	<div><a href="">Community</a></div>
+</div>
+
+<center>
+<img src="../../img/babysquirrelstudios.png" width=100%>
+<h1>Baby Squirrel Studios</h1>
+</center>
+
+<div class="section-title" id="our-games">
+
+<h3>Devblog 1: The Ship</h3>
+
+<div id="timeSinceOrDate"></div>
+
+<script>
+window.onload = function() {
+    // Enter your desired date and time below in the format 'YYYY-MM-DDTHH:MM' (e.g., '2024-03-28T12:00')
+    var startDateString = '2024-04-21T15:11'; // Replace this with your desired date and time
+
+    var startDate = new Date(startDateString);
+
+    // Function to calculate time since or date
+    function getTimeSinceOrDate(date) {
+        var now = new Date();
+        var timeDiff = now.getTime() - date.getTime();
+        var minutesDiff = Math.floor(timeDiff / (1000 * 60));
+        var hoursDiff = Math.floor(timeDiff / (1000 * 3600));
+        var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+
+        if (minutesDiff < 60) {
+            return minutesDiff + (minutesDiff === 1 ? " minute ago" : " minutes ago");
+        } else if (hoursDiff < 24) {
+            return hoursDiff + (hoursDiff === 1 ? " hour ago" : " hours ago");
+        } else if (daysDiff < 14) {
+            return daysDiff + (daysDiff === 1 ? " day ago" : " days ago");
+        } else {
+            var options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+    }
+
+    // Display time since or date
+    document.getElementById("timeSinceOrDate").innerHTML = getTimeSinceOrDate(startDate);
+};
+</script>
+
+</div>
+
+<div class="section">
+<div class="description-text">
+<center>
+<img src="../../img/devblog1-1.png" width=100%>
+</center>   
+<p>
+The past 2 weeks have been filled with sculpting, both figuratively and literally, the main gameplay arena of Space Junkers: <b>your very own ship.</b> My design philosophy for the ship boils down to these three design guidelines:  
+</p>
+<ul>
+<li><b>the ship is the UI</b></li>
+<li><b>spaceship sim, not space sim</b></li>
+<li><b>the ship is <i>95%</i> of the game</b> </li>
+</ul>
+
+<p>
+Everything relevant to the player and gameplay lives right there on your ship. As few menus, health bars, and numbers on your screen as possible. All that information and functionality is available to you through the interior of your ship. The ship should be reactive, interactive, compelling, logically functional, and dynamic at all times.  You're not a pilot locked in the cockpit, nor is your ship's interior just a room you stand in between missions. The core gameplay happens all within your ship at all times. Your ship IS Space Junkers, and I am designing it that way from the start.
+</p>
+
+<p>Right now, its up to 11 purpose-specific compartments, rooms, holds, and chambers. Here is a list of what is planned so far.</p>
+
+</p>
+<center>
+<img src="../../img/devblog1.png" width=100%>
+</center>
+
+<p>The Upper Deck</p>
+<ul>
+<li>The Bridge/Nav Deck - Adjust your heading, speed, and other captainy duties. You could just stand here and enjoy the view, but wait, does that smell like smoke?</li>
+<li>Comms/Sensors room - Send and recieve communications to other Junkers and probe the dark reaches of space with your state-of-the-art...ish sensor suite.</li>
+<li>Cargo Hold/Materials processing - Collecting and processing junk is a central part of being a Space Junker, and this is where the magic happens.</li>
+<li>Cooling/Thermodynamics - Your systems all produce heat, a lot of it, and you have to get rid of it somehow!</li>
+<li>The Engine Room - Why even go back here? You can just engage the engines from the bridge, right? I'm sure everything will be fine.</li>
+</ul>
+
+<p>The Lower Deck</p>
+<ul>
+<li>The Weapons Hold - Torpedos, cannons, they don't just load themselves, ya know?</li>
+<li>Medbay/Lab - With all of your free time aboard, you'll be able to study any sort of interesting goop you may scoop up. Oh, and if the goop turns out cause some sort of space rash, you can whip up some meds easy enough.</li>
+<li>Quarters/Galley - Food, rest... fuel storage? The multipurpose habitation makes economical use of the limited space on-board.</li>
+<li>Shields - You'll probably never need them, but better safe than sorry.</li>
+<li>Reactor - Run your very own nuclear fission reactor, it's easy! Now 100% neutron-leak free, guaranteed!</li>
+<li>Warp Drive - Honestly, no one living knows how this thing works anymore, so hopefully it doesn't break.</li>
+</ul>
+
+<p>
+I'm adding new features to the game everyday <a href="https://twitch.tv/rangerx___" target=blank>on my stream on Twitch.</a> Stay tuned for more updates in the near future, and thanks for checking out Space Junkers! 
+</p>
+
+<p>
+<i>- Ranger X</i><br>
+</p>
+
+<center>
+<img src="../../img/devblog1-2.png" width=100%>
+</center>   
+
+
+</div>
+</div>
+
+<div class="separator">+++</div>
+
+<div class="section">
+<center>© 2024 Baby Squirrel Studios. All Rights Reserved.</center>
+</div>
+</div>
+
+
+<script>
+// Calculates the time since a specific date.
+function timeSince(date) {
+
+  var seconds = Math.floor((new Date() - date) / 1000);
+
+  var interval = seconds / 31536000;
+
+  if (interval > 1) {
+    return Math.floor(interval) + " years";
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + " months";
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + " days";
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + " hours";
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + " minutes";
+  }
+  return Math.floor(seconds) + " seconds";
+}
+
+// Changes the content of a p element with an id to a new value.
+function myFunc(variable) {
+	var s = document.getElementById(variable);
+	s.value = "time since posted";
+	
+	document.getElementById('id1').innerHTML = s.value;
+}
+
+
+// Testing functions...
+myFunc("id1");
+
+var aDay = 24*60*60*1000;
+console.log(timeSince(new Date(Date.now()-aDay)));
+console.log(timeSince(new Date(Date.now()-aDay*2)));
+
+</script>
+
+</body>
+</html>

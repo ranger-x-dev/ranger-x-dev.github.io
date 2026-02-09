@@ -1,227 +1,113 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>Baby Squirrel Studios</title>
+<meta charset="UTF-8" />
+<title>File Explorer</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: #00ff00;
+        font-family: monospace;
+        display: flex;
+        height: 100vh;
+    }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    #sidebar {
+        width: 260px;
+        border-right: 1px solid #00ff00;
+        padding: 10px;
+        overflow-y: auto;
+    }
 
-<link rel="stylesheet" href="style_bss.css">
+    #content {
+        flex: 1;
+        padding: 15px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+    }
 
-<meta property="og:title" content="Baby Squirrel Studios">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.babysquirrelstudios.com">
-<meta property="og:description" content="Independent game developer for Space Junkers">
-<meta property="og:image" content="https://www.babysquirrelstudios.com/img/babysquirrelstudios_og.png">
+    .dir, .file {
+        cursor: pointer;
+        user-select: none;
+    }
 
+    .dir {
+        margin-top: 6px;
+    }
+
+    .children {
+        margin-left: 16px;
+        display: none;
+    }
+
+    .open > .children {
+        display: block;
+    }
+
+    .file:hover, .dir:hover {
+        text-decoration: underline;
+    }
+</style>
 </head>
 <body>
 
-<center>
-<div class="page">
-
-<div class="links">
-	<div><a href="index.html#our-games">Games</a></div>
-	<div><a href="index.html#blog">Blog</a></div>
-	<div><a href="index.html#about">About</a></div>
-	<div><a href="">Media</a></div>
-	<div><a href="">Community</a></div>
-</div>
-
-<center>
-<img src="img/babysquirrelstudios.png" width=100%>
-<h1>Baby Squirrel Studios</h1>
-</center>
-
-<center>
-<div class="join-discord">
-Join the development!<br>
-<a href="https://discord.gg/t7eUafMpsj" target="_blank"><img src="img/join_discord.png" width=50%></a>
-</div>
-</center>
-
-<div class="section-title" id="our-games">
-<h2>Our Games</h2>
-</div>
-
-<div class="section">
-<center>
-<img src="img/xenotaph_logo_title.png" width=100%>
-</center>
-
-<div class="description-text">
-  
-  <p><b>Xenotaph</b> is a lore-rich turn-based strategy game that merges classic board game elements, card deck building, and puzzles, with an enigmatic futuristic expedition as its narrative backdrop. Solve challenging puzzles to unlock new cards: ancient relics that can be used to alter and augment the abilities of the pieces on the board. Build your deck to discover new playstyles and fun synergies, and guide your expedition to victory against whatever challenges that may emerge from the cosmos.</p>
-  
-  <p>Xenotaph is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
-  
-  <p>
-  Status: In development<br>
-  Release Date: Late 2024 (tentative)
-  </p>
-</div>
-</div>
-
-<div class="separator">+++</div>
-
-<div class="section">
-<div>
-<br>
-<h3>Space Junkers</h3> 
-  <p><b>Space Junkers </b> is a multiplayer 3D spaceship simulator being developed in the Godot Engine. Set in a retro-futuristic near-future, pilots known as Junkers eek out a meager existence in the solar system. As a Junker, you must repair, maintain, and run every system of your ship in order to survive and thrive in a system filled with hazards, hostiles, and of course: other Junkers.</p>
-  
-  <p>Space Junkers is currently in development. Follow the development on <a href="" target="_blank">Discord!</a></p>
-  
-  <p>
-  Status: In development<br>
-  Release Date: TBA
-  </p>
-
-</div>
-</div>
-
-<div class="section-title" id="blog">
-<h2>Blog</h2>
-</div>
-<div class="separator">+++</div>
-<div class="section">
-
-<div>
-  <h3>Devblog 1: The Ship</h3>
-  <p id="timeSinceOrDate"></p>
-  
-<script>
-window.onload = function() {
-	// Enter your desired date and time below in the format 'YYYY-MM-DDTHH:MM' (e.g., '2024-03-28T12:00')
-	var startDateString = '2024-04-21T15:11'; // Replace this with your desired date and time
-
-	var startDate = new Date(startDateString);
-
-	// Function to calculate time since or date
-	function getTimeSinceOrDate(date) {
-		var now = new Date();
-		var timeDiff = now.getTime() - date.getTime();
-		var minutesDiff = Math.floor(timeDiff / (1000 * 60));
-		var hoursDiff = Math.floor(timeDiff / (1000 * 3600));
-		var daysDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-
-		if (minutesDiff < 60) {
-			return minutesDiff + (minutesDiff === 1 ? " minute ago" : " minutes ago");
-		} else if (hoursDiff < 24) {
-			return hoursDiff + (hoursDiff === 1 ? " hour ago" : " hours ago");
-		} else if (daysDiff < 14) {
-			return daysDiff + (daysDiff === 1 ? " day ago" : " days ago");
-		} else {
-			var options = { year: 'numeric', month: 'long', day: 'numeric' };
-			return date.toLocaleDateString('en-US', options);
-		}
-	}
-
-	// Display time since or date
-	document.getElementById("timeSinceOrDate").innerHTML = getTimeSinceOrDate(startDate);
-};
-</script>
-  
-  <p>
-  The past 2 weeks have been filled with sculpting, both figuratively and literally, the main gameplay arena of Space Junkers: <b>your very own ship.</b> My design philosophy for the ship boils down to these three design guidelines: <a href="blog/post/devblog1.html">Continue reading...</a>
-  </p>
-  
-  <h3>Read More Devblogs</h3>
-  <ul>
-  <li><p><a href="blog/post/devblog0.html">Devblog 0: The Vision</a></p></li>
-  </ul>
-</div>
-</div>
-
-<div class="separator">+++</div>
-
-
-
-
-<div class="section-title" id="about">
-<h2>About</h2>
-</div>
-
-<div class="section">
-
-<div>
-  <p>Hi, I'm Kyle AKA <a href="https://github.com/ranger-x-dev" target="_blank">Ranger X</a>. I am an independent game developer, and I am making games that I have always wanted to play. I love science fiction, science fact, and all things space. That's what my games are about. If you are interested in any of the games, <a href="https://discord.gg/t7eUafMpsj" target="_blank">please join me on Discord</a> to follow the development.</p>
-</div>
-
-<!-- Add a placeholder for the Twitch embed -->
-<div id="twitch-embed"></div>
-
-<!-- Load the Twitch embed JavaScript file -->
-<script src="https://embed.twitch.tv/embed/v1.js"></script>
-
-<!-- Create a Twitch.Embed object that will render within the "twitch-embed" element -->
-<script type="text/javascript">
-  new Twitch.Embed("twitch-embed", {
-	width: 854,
-	height: 480,
-	channel: "rangerx___",
-	// Only needed if this page is going to be embedded on other websites
-	parent: ["www.babysquirrelstudios.com"]
-  });
-</script>
-
-</div>
-
-<div class="separator">+++</div>
-
-<div class="section">
-<center>© 2024 Baby Squirrel Studios. All Rights Reserved.</center>
-</div>
-</div>
-
+<div id="sidebar"></div>
+<div id="content">Select a file.</div>
 
 <script>
-// Calculates the time since a specific date.
-function timeSince(date) {
-
-  var seconds = Math.floor((new Date() - date) / 1000);
-
-  var interval = seconds / 31536000;
-
-  if (interval > 1) {
-    return Math.floor(interval) + " years";
-  }
-  interval = seconds / 2592000;
-  if (interval > 1) {
-    return Math.floor(interval) + " months";
-  }
-  interval = seconds / 86400;
-  if (interval > 1) {
-    return Math.floor(interval) + " days";
-  }
-  interval = seconds / 3600;
-  if (interval > 1) {
-    return Math.floor(interval) + " hours";
-  }
-  interval = seconds / 60;
-  if (interval > 1) {
-    return Math.floor(interval) + " minutes";
-  }
-  return Math.floor(seconds) + " seconds";
+async function loadTree() {
+    const res = await fetch("files.json");
+    const tree = await res.json();
+    const sidebar = document.getElementById("sidebar");
+    sidebar.appendChild(renderNodes(tree));
 }
 
-// Changes the content of a p element with an id to a new value.
-function myFunc(variable) {
-	var s = document.getElementById(variable);
-	s.value = "time since posted";
-	
-	document.getElementById('id1').innerHTML = s.value;
+function renderNodes(nodes) {
+    const container = document.createElement("div");
+
+    nodes.forEach(node => {
+        if (node.type === "directory") {
+            const dir = document.createElement("div");
+            dir.className = "dir";
+            dir.textContent = "▸ " + node.name;
+
+            const children = document.createElement("div");
+            children.className = "children";
+            children.appendChild(renderNodes(node.children));
+
+            dir.onclick = () => {
+                dir.parentElement.classList.toggle("open");
+                dir.textContent = 
+                    (dir.parentElement.classList.contains("open") ? "▾ " : "▸ ")
+                    + node.name;
+            };
+
+            const wrapper = document.createElement("div");
+            wrapper.appendChild(dir);
+            wrapper.appendChild(children);
+            container.appendChild(wrapper);
+        }
+
+        if (node.type === "file") {
+            const file = document.createElement("div");
+            file.className = "file";
+            file.textContent = node.name;
+            file.onclick = () => loadFile(node.path);
+            container.appendChild(file);
+        }
+    });
+
+    return container;
 }
 
+async function loadFile(path) {
+    const res = await fetch(path);
+    const text = await res.text();
+    document.getElementById("content").textContent = text;
+}
 
-// Testing functions...
-myFunc("id1");
-
-var aDay = 24*60*60*1000;
-console.log(timeSince(new Date(Date.now()-aDay)));
-console.log(timeSince(new Date(Date.now()-aDay*2)));
-
+loadTree();
 </script>
 
 </body>

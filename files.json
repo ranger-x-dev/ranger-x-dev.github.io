@@ -1,0 +1,39 @@
+[
+  {
+    "type": "directory",
+    "name": "Recipes",
+    "children": [
+      {
+        "type": "file",
+        "name": "italian chicken cutlets.txt",
+        "path": "Recipes/italian chicken cutlets.txt"
+      }
+    ]
+  },
+  {
+    "type": "directory",
+    "name": "Subdirectory",
+    "children": [
+      {
+        "type": "file",
+        "name": "subdirectorytest.txt",
+        "path": "Subdirectory/subdirectorytest.txt"
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "name": "bingo.html",
+    "path": "bingo.html"
+  },
+  {
+    "type": "file",
+    "name": "index.html",
+    "path": "index.html"
+  },
+  {
+    "type": "file",
+    "name": "test.txt",
+    "path": "test.txt"
+  }
+]

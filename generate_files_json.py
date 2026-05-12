@@ -1,14 +1,18 @@
 import os
 import json
 
-ROOT = "."  # run from repo root
+ROOT = "."
 OUTPUT = "files.json"
 ALLOWED_EXT = {".txt", ".html"}
+IGNORE_FILES = {"index.html", "files.json"}
 
 def scan(path):
     items = []
     for name in sorted(os.listdir(path)):
         if name.startswith("."):
+            continue
+
+        if name.lower() in IGNORE_FILES:
             continue
 
         full_path = os.path.join(path, name)
@@ -37,4 +41,4 @@ tree = scan(ROOT)
 with open(OUTPUT, "w", encoding="utf-8") as f:
     json.dump(tree, f, indent=2)
 
-print("files.json generated")
+print("files.json generated (index.html ignored)")

@@ -1,0 +1,7 @@
+What is spontaneous symmetry breaking?
+
+An analogy to spontaneous symmetry breaking in physical law can be observed at a nice dinner party. Place settings are placed around a circular table for all the guests. Between each plate is a glass of water so that when a guest sits down, they have one glass to their right and one to their left. It is unclear which glass is for each guest, however, there is only one glass per guest on the table. This is the symmetrical scenario, and represents the symmetry of a physical law.
+
+At some point, one of the guests will be the first to take a drink, and they will choose either the right or left glass before them. If the guest chooses to drink from the left glass, all other guests must then follow drinking from the glass to the left of their place setting so that everyone gets a drink. We say now that the symmetry is broken because the guests drinking from their glasses no longer have the same symmetry as the place settings initially placed before them. This is symmetry breaking. Because the symmetry is broken by some small outside disturbance (one of the guests chose a glass to their left because they are left handed, random choice, or maybe they disliked the guest to their left) we say that it is "spontaneous" symmetry breaking.
+
+In physics, spontaneous symmetry breaking occurs when the solution to a problem takes on a different symmetry than the physical laws that govern it follow due to a small disturbance to the system.

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Neural Network XOR Visualization</title>
+<style>
+  body {
+    background: #111;
+    color: #eee;
+    font-family: sans-serif;
+    text-align: center;
+  }
+  canvas {
+    background: #000;
+    border: 1px solid #333;
+    margin-top: 10px;
+  }
+  button {
+    margin: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  #surfaceContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+</style>
+</head>
+<body>
+
+<h2>Neural Network Learning XOR</h2>
+
+<div>
+  <button onclick="train(100)">Train 100</button>
+  <button onclick="train(500)">Train 500</button>
+  <button onclick="train(1000)">Train 1000</button>
+  <br>
+  <button onclick="setInput(0,0)">Test 0 0</button>
+  <button onclick="setInput(0,1)">Test 0 1</button>
+  <button onclick="setInput(1,0)">Test 1 0</button>
+  <button onclick="setInput(1,1)">Test 1 1</button>
+</div>
+
+Neural Network<br>
+<canvas id="canvas" width="600" height="400"></canvas><br>
+
+Loss (last 200 steps)<br>
+<canvas id="lossCanvas" width="600" height="120"></canvas><br>
+
+<h3>Training Step Log</h3>
+<textarea id="logBox"
+  style="width:600px;height:300px;background:#000;color:#0f0;
+         font-family:monospace;font-size:12px;"
+  readonly></textarea>
+<br>
+<button onclick="clearLog()">Clear Log</button>
+
+
+Loss Surface Slices (9D → 2D views)<br>
+<div id="surfaceContainer"></div>
+
+<h3>Interpreting Heatmaps</h3>
+<p>When the loss oscillates or training is stuck, the heatmaps can give visual clues about what’s happening:</p>
+
+<table align=center>
+  <thead>
+    <tr>
+      <th>Visual Cue</th>
+      <th>Likely Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>White dot on red</td>
+      <td>Current loss is high in this slice; adjusting these two parameters could reduce loss.</td>
+    </tr>
+    <tr>
+      <td>White dot on steep gradient (colors change quickly)</td>
+      <td>High sensitivity; network may overshoot minima if learning rate is too large.</td>
+    </tr>
+    <tr>
+      <td>White dot at a cross of red and blue</td>
+      <td>Possible <strong>saddle point</strong>: one direction wants to decrease loss, another increases it.</td>
+    </tr>
+    <tr>
+      <td>White dot in a large flat blue area</td>
+      <td>Plateau: network may move slowly; small steps may not change loss much.</td>
+    </tr>
+    <tr>
+      <td>Colors rapidly changing in multiple slices</td>
+      <td>Jagged loss landscape; step-to-step oscillation is likely.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Tip:</strong> By comparing multiple slices, you can see which parameters are causing oscillation and which are near a local minimum.</p>
+
+
+<script>
+// ---------- Logging ----------
+let logLines = [];
+const logBox = document.getElementById("logBox");
+
+function log(text){
+  logLines.push(text);
+}
+
+function flushLog(){
+  logBox.value += logLines.join("\n") + "\n";
+  logLines = [];
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+function clearLog(){
+  logBox.value = "";
+}
+
+
+// ---------- Math ----------
+const sigmoid = x => 1/(1+Math.exp(-x));
+const dsigmoid = y => y*(1-y);
+const rand = () => Math.random()*2-1;
+
+// ---------- Network ----------
+let w1 = [[rand(),rand()],[rand(),rand()]];
+let b1 = [rand(),rand()];
+let w2 = [rand(),rand()];
+let b2 = rand();
+
+const data = [
+  {x:[0,0],y:0},
+  {x:[0,1],y:1},
+  {x:[1,0],y:1},
+  {x:[1,1],y:0}
+];
+
+const lr = 0.1;
+let testInput=[0,0];
+let lossHistory=[];
+
+// ---------- Parameter Registry ----------
+const params = [
+  { name:"w1[0][0]", get:()=>w1[0][0], set:v=>w1[0][0]=v },
+  { name:"w1[0][1]", get:()=>w1[0][1], set:v=>w1[0][1]=v },
+  { name:"w1[1][0]", get:()=>w1[1][0], set:v=>w1[1][0]=v },
+  { name:"w1[1][1]", get:()=>w1[1][1], set:v=>w1[1][1]=v },
+  { name:"b1[0]", get:()=>b1[0], set:v=>b1[0]=v },
+  { name:"b1[1]", get:()=>b1[1], set:v=>b1[1]=v },
+  { name:"w2[0]", get:()=>w2[0], set:v=>w2[0]=v },
+  { name:"w2[1]", get:()=>w2[1], set:v=>w2[1]=v },
+  { name:"b2", get:()=>b2, set:v=>b2=v }
+];
+
+// ---------- Forward ----------
+function forward(x){
+  const zHidden=[
+    x[0]*w1[0][0]+x[1]*w1[1][0]+b1[0],
+    x[0]*w1[0][1]+x[1]*w1[1][1]+b1[1]
+  ];
+  const h=zHidden.map(sigmoid);
+  const zOut=h[0]*w2[0]+h[1]*w2[1]+b2;
+  const o=sigmoid(zOut);
+  return {zHidden,h,zOut,o};
+}
+
+// ---------- Training ----------
+function train(steps){
+
+  clearLog();   
+
+  for(let step=0; step<steps; step++){
+
+    const d = data[Math.floor(Math.random()*4)];
+
+    // ---- Forward ----
+    const {zHidden, h, zOut, o} = forward(d.x);
+
+    const error = d.y - o;
+    const loss = 0.5 * error * error;
+    const dOut = error * dsigmoid(o);
+
+    // Save old params
+    const old = params.map(p => p.get());
+
+    // ---- Output layer update ----
+    const grad_w2_0 = dOut * h[0];
+    const grad_w2_1 = dOut * h[1];
+    const grad_b2 = dOut;
+
+    w2[0] += lr * grad_w2_0;
+    w2[1] += lr * grad_w2_1;
+    b2    += lr * grad_b2;
+
+    // ---- Hidden layer update ----
+    const gradHidden = [];
+
+    for(let j=0;j<2;j++){
+      const dH = dOut * w2[j] * dsigmoid(h[j]);
+      gradHidden.push(dH);
+
+      w1[0][j] += lr * dH * d.x[0];
+      w1[1][j] += lr * dH * d.x[1];
+      b1[j]    += lr * dH;
+    }
+
+    const updated = params.map(p => p.get());
+
+    // ---- Logging ----
+    log(`Step ${step+1}`);
+    log(`Input: [${d.x}]  Target: ${d.y}`);
+    log(`zHidden: [${zHidden.map(v=>v.toFixed(4))}]`);
+    log(`Hidden activations: [${h.map(v=>v.toFixed(4))}]`);
+    log(`zOut: ${zOut.toFixed(4)}  Output: ${o.toFixed(4)}`);
+    log(`Error: ${error.toFixed(6)}  Loss: ${loss.toFixed(6)}`);
+    log(`dOut (output gradient): ${dOut.toFixed(6)}`);
+    log(`Hidden gradients: [${gradHidden.map(v=>v.toFixed(6))}]`);
+    log("Parameter updates:");
+
+    params.forEach((p,i)=>{
+      log(`  ${p.name}: ${old[i].toFixed(6)} → ${updated[i].toFixed(6)}`);
+    });
+
+    log("--------------------------------------------------");
+
+    lossHistory.push(loss);
+    if(lossHistory.length>200) lossHistory.shift();
+  }
+
+  flushLog();     // ONE DOM update
+  test();
+  drawLoss();
+  createSurfaceGrid(); // redraw once at end
+}
+
+
+// ---------- Testing ----------
+function setInput(a,b){
+  testInput=[a,b];
+  test();
+}
+
+function test(){
+  const {zHidden,h,zOut,o}=forward(testInput);
+  draw(testInput,zHidden,h,zOut,o);
+}
+
+// ---------- Network Visualization ----------
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+function draw(inputs,zHidden,hidden,zOut,output){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const layers=[inputs,hidden,[output]];
+  const xPos=[100,300,500];
+
+  drawWeights(w1,xPos[0],xPos[1],inputs,hidden);
+  drawWeights([w2],xPos[1],xPos[2],hidden,[output]);
+
+  layers.forEach((layer,i)=>{
+    layer.forEach((v,j)=>{
+      const y=150+j*100;
+      ctx.beginPath();
+      ctx.arc(xPos[i],y,20,0,Math.PI*2);
+      const c=Math.floor(v*255);
+      ctx.fillStyle=`rgb(${c},${c},${c})`;
+      ctx.fill();
+      ctx.strokeStyle="#555";
+      ctx.stroke();
+
+      if(i>0){
+        const z=i===1?zHidden[j].toFixed(2):zOut.toFixed(2);
+        ctx.fillStyle="yellow";
+        ctx.font="12px sans-serif";
+        ctx.fillText(z,xPos[i]-10,y+40);
+      }
+
+      ctx.fillStyle="yellow";
+      if(i===0) ctx.fillText(`Input ${j+1}`,xPos[i]-30,y-25);
+      if(i===1) ctx.fillText(`Hidden ${j+1}`,xPos[i]-30,y-25);
+      if(i===2) ctx.fillText(`Output`,xPos[i]-25,y-25);
+    });
+  });
+}
+
+function drawWeights(weights,x1,x2,from,to){
+  from.forEach((_,i)=>{
+    to.forEach((_,j)=>{
+      const w=weights[i]?.[j] ?? weights[0][j];
+      ctx.beginPath();
+      ctx.moveTo(x1,150+i*100);
+      ctx.lineTo(x2,150+j*100);
+      ctx.strokeStyle=w>0?"lime":"red";
+      ctx.lineWidth=Math.abs(w)*2;
+      ctx.stroke();
+    });
+  });
+}
+
+// ---------- Loss Plot ----------
+const lossCanvas=document.getElementById("lossCanvas");
+const lctx=lossCanvas.getContext("2d");
+
+function drawLoss(){
+  lctx.clearRect(0,0,lossCanvas.width,lossCanvas.height);
+  lctx.beginPath();
+  lossHistory.forEach((l,i)=>{
+    const x=i*(lossCanvas.width/200);
+    const y=lossCanvas.height-l*400;
+    if(i===0) lctx.moveTo(x,y);
+    else lctx.lineTo(x,y);
+  });
+  lctx.strokeStyle="cyan";
+  lctx.stroke();
+}
+
+// ---------- Generic Loss Surface ----------
+function drawLossSurfaceFor(i,j,canvas){
+  const ctx=canvas.getContext("2d");
+  const gridSize=40;
+  const range=4;
+
+  const p1=params[i];
+  const p2=params[j];
+  const orig1=p1.get();
+  const orig2=p2.get();
+
+  let min=Infinity,max=-Infinity;
+  const grid=[];
+
+  for(let x=0;x<gridSize;x++){
+    grid[x]=[];
+    for(let y=0;y<gridSize;y++){
+      const v1=orig1-range+(x/(gridSize-1))*2*range;
+      const v2=orig2-range+(y/(gridSize-1))*2*range;
+
+      p1.set(v1);
+      p2.set(v2);
+
+      let loss=0;
+      for(let d of data){
+        const o=forward(d.x).o;
+        loss+=0.5*(d.y-o)**2;
+      }
+
+      grid[x][y]=loss;
+      min=Math.min(min,loss);
+      max=Math.max(max,loss);
+    }
+  }
+
+  p1.set(orig1);
+  p2.set(orig2);
+
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  for(let x=0;x<gridSize;x++){
+    for(let y=0;y<gridSize;y++){
+      const norm=(grid[x][y]-min)/(max-min+1e-8);
+      const r=Math.floor(norm*255);
+      const b=Math.floor((1-norm)*255);
+      ctx.fillStyle=`rgb(${r},0,${b})`;
+
+      ctx.fillRect(
+        x*canvas.width/gridSize,
+        y*canvas.height/gridSize,
+        canvas.width/gridSize,
+        canvas.height/gridSize
+      );
+    }
+  }
+
+  // current parameter position (center)
+  ctx.fillStyle="white";
+  ctx.beginPath();
+  ctx.arc(canvas.width/2,canvas.height/2,4,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle="white";
+  ctx.font="10px sans-serif";
+  ctx.fillText(`${p1.name} vs ${p2.name}`,5,12);
+}
+
+// ---------- Create Surface Grid ----------
+function createSurfaceGrid(){
+  const container=document.getElementById("surfaceContainer");
+  container.innerHTML="";
+
+  const pairs=[
+    [0,1],[2,3],[4,5],
+    [6,7],[6,8],[7,8]
+  ];
+
+  pairs.forEach(([i,j])=>{
+    const c=document.createElement("canvas");
+    c.width=200;
+    c.height=200;
+    c.style.margin="5px";
+    container.appendChild(c);
+    drawLossSurfaceFor(i,j,c);
+  });
+}
+
+// ---------- Init ----------
+test();
+createSurfaceGrid();
+
+</script>
+</body>
+</html>

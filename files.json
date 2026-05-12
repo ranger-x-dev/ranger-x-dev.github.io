@@ -1,39 +1,61 @@
 [
   {
     "type": "directory",
+    "name": "Physics",
+    "children": [
+      {
+        "type": "directory",
+        "name": "Journal",
+        "children": [
+          {
+            "type": "file",
+            "name": "spontaneous_symmetry_breaking.txt",
+            "path": "Physics/Journal/spontaneous_symmetry_breaking.txt"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "name": "README.txt",
+    "path": "README.txt"
+  },
+  {
+    "type": "directory",
     "name": "Recipes",
     "children": [
       {
         "type": "file",
-        "name": "italian chicken cutlets.txt",
-        "path": "Recipes/italian chicken cutlets.txt"
+        "name": "fried_rice.txt",
+        "path": "Recipes/fried_rice.txt"
+      },
+      {
+        "type": "file",
+        "name": "italian_chicken_cutlets.txt",
+        "path": "Recipes/italian_chicken_cutlets.txt"
       }
     ]
   },
   {
     "type": "directory",
-    "name": "Subdirectory",
+    "name": "Tabletop",
     "children": [
       {
         "type": "file",
-        "name": "subdirectorytest.txt",
-        "path": "Subdirectory/subdirectorytest.txt"
+        "name": "tabletop_game_rules.txt",
+        "path": "Tabletop/tabletop_game_rules.txt"
       }
     ]
   },
   {
     "type": "file",
-    "name": "bingo.html",
-    "path": "bingo.html"
+    "name": "^neural_network.html",
+    "path": "^neural_network.html"
   },
   {
     "type": "file",
-    "name": "index.html",
-    "path": "index.html"
-  },
-  {
-    "type": "file",
-    "name": "test.txt",
-    "path": "test.txt"
+    "name": "index_typing.html",
+    "path": "index_typing.html"
   }
 ]

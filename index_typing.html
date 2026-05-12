@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Basic document metadata -->
+  <meta charset="UTF-8" />
+  <title>Ranger-X</title>
+
+  <!-- App styling -->
+  <style>
+    /* Global layout + terminal vibes */
+    body {
+      margin: 0;
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Left file tree sidebar */
+    #sidebar {
+      width: 260px;
+      border-right: 1px solid #00ff00;
+      padding: 10px;
+      overflow-y: auto;
+    }
+
+    /* Main content area */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Title bar showing current file */
+    #titlebar {
+      background: #00ff00;
+      color: black;
+      padding: 6px 10px;
+      font-weight: bold;
+      border-bottom: 1px solid #00aa00;
+    }
+
+    /* File content display */
+    #content {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    /* File + directory styling */
+    .dir,
+    .file {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dir {
+      margin-top: 6px;
+    }
+
+    /* Nested directory children */
+    .children {
+      margin-left: 16px;
+      display: none;
+    }
+
+    /* Show children when directory is open */
+    .open > .children {
+      display: block;
+    }
+
+    .file:hover,
+    .dir:hover {
+      text-decoration: underline;
+    }
+
+    /* Blinking terminal cursor */
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar file tree -->
+  <div id="sidebar"></div>
+
+  <!-- Main panel -->
+  <div id="main">
+    <div id="titlebar">Loading...</div>
+    <div id="content">Loading…</div>
+  </div>
+
+  <!-- Application logic -->
+  <script>
+    /**
+     * Load the file tree from files.json
+     */
+    async function loadTree() {
+      const res = await fetch("files.json");
+      const tree = await res.json();
+
+      const sidebar = document.getElementById("sidebar");
+      sidebar.appendChild(renderNodes(tree));
+
+      return tree;
+    }
+
+    /**
+     * Recursively render directories and files
+     */
+    function renderNodes(nodes) {
+      const container = document.createElement("div");
+
+      nodes.forEach(node => {
+        // Directory node
+        if (node.type === "directory") {
+          const dir = document.createElement("div");
+          dir.className = "dir";
+          dir.textContent = "▸ " + node.name;
+
+          const children = document.createElement("div");
+          children.className = "children";
+          children.appendChild(renderNodes(node.children));
+
+          // Toggle open/close on click
+          dir.onclick = () => {
+            dir.parentElement.classList.toggle("open");
+            dir.textContent =
+              (dir.parentElement.classList.contains("open") ? "▾ " : "▸ ") +
+              node.name;
+          };
+
+          const wrapper = document.createElement("div");
+          wrapper.appendChild(dir);
+          wrapper.appendChild(children);
+          container.appendChild(wrapper);
+        }
+
+        // File node
+        if (node.type === "file") {
+          const file = document.createElement("div");
+          file.className = "file";
+          file.textContent = node.name;
+          file.onclick = () => loadFile(node.path);
+          container.appendChild(file);
+        }
+      });
+
+      return container;
+    }
+
+    let typingInterval = null;
+
+    /**
+     * Typewriter-style text rendering
+     */
+    function typeText(element, text, speed = 15) {
+      clearInterval(typingInterval);
+      element.innerHTML = "";
+
+      let i = 0;
+      const cursor = document.createElement("span");
+      cursor.className = "cursor";
+      cursor.textContent = "█";
+      element.appendChild(cursor);
+
+      typingInterval = setInterval(() => {
+        if (i >= text.length) {
+          clearInterval(typingInterval);
+          cursor.remove();
+          return;
+        }
+
+        cursor.insertAdjacentText("beforebegin", text[i]);
+        i++;
+        element.scrollTop = element.scrollHeight;
+      }, speed);
+    }
+
+    /**
+     * Load and display a file
+     */
+    async function loadFile(path) {
+      const res = await fetch(path);
+      const text = await res.text();
+
+      const content = document.getElementById("content");
+      const titlebar = document.getElementById("titlebar");
+      const filename = path.split("/").pop();
+
+      titlebar.textContent = filename;
+      clearInterval(typingInterval);
+
+      // Render HTML instantly (typing raw HTML looks cursed)
+      if (path.toLowerCase().endsWith(".html")) {
+        content.innerHTML = text;
+      } else {
+        typeText(content, text, 5);
+      }
+    }
+
+    // Initial load
+    loadTree().then(() => {
+      loadFile("README.txt");
+    });
+  </script>
+</body>
+</html>

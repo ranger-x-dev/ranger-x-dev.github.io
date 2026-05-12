@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>File Explorer</title>
+<title>Ranger-X</title>
 <style>
     body {
         margin: 0;
@@ -20,12 +20,27 @@
         overflow-y: auto;
     }
 
-    #content {
-        flex: 1;
-        padding: 15px;
-        overflow-y: auto;
-        white-space: pre-wrap;
-    }
+	#main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	#titlebar {
+		background: #00ff00;
+		color: black;
+		padding: 6px 10px;
+		font-weight: bold;
+		border-bottom: 1px solid #00aa00;
+	}
+
+	#content {
+		flex: 1;
+		padding: 15px;
+		overflow-y: auto;
+		white-space: pre-wrap;
+	}
+
 
     .dir, .file {
         cursor: pointer;
@@ -53,7 +68,10 @@
 <body>
 
 <div id="sidebar"></div>
-<div id="content">Select a file.</div>
+<div id="main">
+    <div id="titlebar">Loading...</div>
+    <div id="content">Loading…</div>
+</div>
 
 <script>
 async function loadTree() {
@@ -61,7 +79,9 @@ async function loadTree() {
     const tree = await res.json();
     const sidebar = document.getElementById("sidebar");
     sidebar.appendChild(renderNodes(tree));
+    return tree;
 }
+
 
 function renderNodes(nodes) {
     const container = document.createElement("div");
@@ -93,7 +113,13 @@ function renderNodes(nodes) {
             const file = document.createElement("div");
             file.className = "file";
             file.textContent = node.name;
-            file.onclick = () => loadFile(node.path);
+            file.onclick = () => {  
+				if (node.name.startsWith("^")) {   //If files start with ^ then they will open as a popup
+					window.open(node.path, "_blank", "width=900,height=600,resizable=yes,scrollbars=yes");
+				} else {
+					loadFile(node.path);
+				}
+			};
             container.appendChild(file);
         }
     });
@@ -104,10 +130,25 @@ function renderNodes(nodes) {
 async function loadFile(path) {
     const res = await fetch(path);
     const text = await res.text();
-    document.getElementById("content").textContent = text;
+
+    const content = document.getElementById("content");
+    const titlebar = document.getElementById("titlebar");
+
+    const filename = path.split("/").pop();
+    titlebar.textContent = filename;
+
+    if (path.toLowerCase().endsWith(".html")) {
+        content.innerHTML = text;
+    } else {
+        content.textContent = text;
+    }
 }
 
-loadTree();
+
+loadTree().then(() => {
+    loadFile("README.txt");
+});
+
 </script>
 
 </body>
